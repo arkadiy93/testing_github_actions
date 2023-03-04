@@ -22,3 +22,4 @@ coverage
 
 .husky
 dist
+.github
