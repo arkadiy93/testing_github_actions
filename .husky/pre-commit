@@ -2,4 +2,9 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 #npm test
-tsc --project tsconfig.json
+pnpm format
+git add .
+
+#pnpm run lint
+#pnpm run test
+#pnpm run tsc

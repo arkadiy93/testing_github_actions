@@ -7,14 +7,20 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint src",
+    "tsc": "tsc",
     "format": "prettier --write .",
-    "test": "vitest",
+    "test": "vitest run",
     "prepare": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pnpm run lint"
+    }
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
