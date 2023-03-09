@@ -7,6 +7,7 @@ function App() {
   return (
     <>
       <h1>Hello to AccessIT 2.0!</h1>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       {isAuthenticated ? <span>Signed In</span> : <SignInButton />}
     </>
   )
