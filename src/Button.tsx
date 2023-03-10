@@ -1,24 +1,22 @@
 import { useMsal } from '@azure/msal-react'
+import { useAuth } from './hooks/useAuth'
 
 export const SignInButton = () => {
-  const { instance } = useMsal()
-
-  const handleLogin = () => {
-    const request = {
-      scopes: [
-        'openid',
-        'profile',
-        'api://c0c7cebd-50e8-432a-83f4-983c8139f5cf/AffiliatesPortal',
-      ],
-    }
-    instance.loginPopup(request).catch((e) => {
-      console.log(e)
-    })
-  }
+  const { initLogin } = useAuth()
 
   return (
-    <button className="ml-auto" onClick={handleLogin}>
+    <button className="ml-auto" onClick={initLogin}>
       Sign in using Popup
+    </button>
+  )
+}
+
+export const SignOutButton = () => {
+  const { initLogout } = useAuth()
+
+  return (
+    <button className="ml-auto" onClick={initLogout}>
+      Sign out
     </button>
   )
 }

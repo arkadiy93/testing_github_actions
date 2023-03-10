@@ -1,13 +1,14 @@
 import { useIsAuthenticated } from '@azure/msal-react'
-import { SignInButton } from './Button'
+import {SignInButton, SignOutButton} from './Button'
+import {useAuth} from "./hooks/useAuth";
 
 function App() {
   const isAuthenticated = useIsAuthenticated()
-
+  //const { isAuthenticated } = useAuth();
   return (
     <>
       <h1>Hello to AccessIT 2.0!</h1>
-      {isAuthenticated ? <span>Signed In</span> : <SignInButton />}
+      {isAuthenticated ? <SignOutButton /> : <SignInButton />}
     </>
   )
 }

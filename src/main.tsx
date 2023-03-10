@@ -7,10 +7,11 @@ import { MsalProvider } from '@azure/msal-react'
 
 const msalInstance = new PublicClientApplication({
   auth: {
-    authority: 'https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0',
+    authority:
+      'https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0',
     clientId: '6524f1c8-d5c2-4368-a4bd-24b4fb084f59',
-    redirectUri: 'http://localhost:3000' + '/callback',
-    postLogoutRedirectUri: 'http://localhost:3000' + '/account',
+    redirectUri: 'http://localhost:5170',
+    postLogoutRedirectUri: 'http://localhost:5170',
   },
   cache: {
     cacheLocation: 'sessionStorage',
@@ -25,9 +26,8 @@ const msalInstance = new PublicClientApplication({
   },
 })
 
-console.log(msalInstance);
-
 const queryClient = new QueryClient()
+console.log('re-render from bottom')
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
