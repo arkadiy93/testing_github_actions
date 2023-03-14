@@ -1,40 +1,19 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { PublicClientApplication } from '@azure/msal-browser'
-import { MsalProvider } from '@azure/msal-react'
-
-const msalInstance = new PublicClientApplication({
-  auth: {
-    authority:
-      'https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0',
-    clientId: '6524f1c8-d5c2-4368-a4bd-24b4fb084f59',
-    redirectUri: 'http://localhost:5170',
-    postLogoutRedirectUri: 'http://localhost:5170',
-  },
-  cache: {
-    cacheLocation: 'sessionStorage',
-    storeAuthStateInCookie: false,
-    secureCookies: false,
-  },
-  system: {
-    windowHashTimeout: 60000,
-    iframeHashTimeout: 6000,
-    loadFrameTimeout: 0,
-    asyncPopups: false,
-  },
-})
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {MsalProvider} from '@azure/msal-react'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
+import {msalInstance} from "@/lib/msal";
 
 const queryClient = new QueryClient()
-console.log('re-render from bottom')
+console.log(process.env.REACT_TEST)
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <MsalProvider instance={msalInstance}>
-        <App />
-      </MsalProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <MsalProvider instance={msalInstance}>
+      <ErrorBoundary>
+        <App/>
+      </ErrorBoundary>
+    </MsalProvider>
+  </QueryClientProvider>
 )

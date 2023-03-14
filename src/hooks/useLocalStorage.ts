@@ -1,34 +1,52 @@
-import { useCallback, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { LOCAL_STORAGE_PREFIX } from "@/config";
 
-const PREFIX = 'accessit-portal'
-const getFullKeyName = (key: string) => `${PREFIX}-${key}`
+const getFullKeyName = (key: string) => `${LOCAL_STORAGE_PREFIX}-${key}`;
 
-export default function(key: string, defaultValue = null) {
+const datePattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
+
+const useLocalStorage = <T>(
+  key: string,
+  defaultValue?: T
+): [T | null, Dispatch<SetStateAction<T>>, () => void] => {
   const keyName = getFullKeyName(key);
   const [state, setState] = useState(() => {
-    const value = window.localStorage.getItem(keyName)
+    const value = window.localStorage.getItem(keyName);
+
     if (!value) {
-      defaultValue &&
-        window.localStorage.setItem(keyName, JSON.stringify(defaultValue))
-      return defaultValue
+      defaultValue && window.localStorage.setItem(keyName, JSON.stringify(defaultValue));
+      return defaultValue;
     }
 
     try {
-      return JSON.parse(value)
+      return JSON.parse(value, reviver);
     } catch (error) {
-      window.localStorage.removeItem(keyName)
-      return defaultValue
+      console.error("Issue during parsing: ", error);
+      window.localStorage.removeItem(keyName);
+      return defaultValue;
     }
-  })
+  });
 
   const remove = useCallback(() => {
-    localStorage.removeItem(keyName)
-    setState(undefined)
-  }, [keyName])
+    localStorage.removeItem(keyName);
+    setState(null);
+  }, [keyName]);
 
   useEffect(() => {
-    window.localStorage.setItem(keyName, JSON.stringify(state))
-  }, [keyName, state])
+    if (!state) return;
 
-  return [state, setState, remove]
+    window.localStorage.setItem(keyName, JSON.stringify(state));
+  }, [keyName, state]);
+
+  return [state, setState, remove];
+};
+
+function reviver(_: string, value: unknown) {
+  if (typeof value === "string" && datePattern.test(value)) {
+    return new Date(value);
+  }
+
+  return value;
 }
+
+export default useLocalStorage;

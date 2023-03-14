@@ -1,4 +1,3 @@
-import { useMsal } from '@azure/msal-react'
 import { useAuth } from './hooks/useAuth'
 
 export const SignInButton = () => {

@@ -1,71 +1,70 @@
-//import * as React from 'react';
-import { useIsAuthenticated, useMsal } from '@azure/msal-react'
-import { useEffect, useState } from 'react'
+import { useMsal } from "@azure/msal-react";
+import { useEffect } from "react";
 import {
   AuthenticationResult,
   EventMessage,
-  EventPayload,
-  EventType,
-} from '@azure/msal-browser'
-import useLocalStorage from './useLocalStorage'
+  EventType
+} from "@azure/msal-browser";
+import useLocalStorage from "./useLocalStorage";
 
-type AuthUser = {
+export type AuthUser = {
   accessToken: string
-  homeAccountId: string
-  localAccountId: string
-  name: string
-  username: string
-  expiresOn: Date
+  homeAccountId: string | null
+  localAccountId: string | null
+  name: string | null
+  username: string | null
+  expiresOn: Date | null
 }
 
 export const useAuth = () => {
-  const [user, setUser, removeUser] = useLocalStorage('user')
-  const { instance } = useMsal()
+  const [user, setUser, removeUser] = useLocalStorage<AuthUser>("user");
+  const isAuthenticated: boolean = !!user?.expiresOn && user.expiresOn > new Date();
+  const isAdmin = false; //TODO add admin handling
 
-  const isAuthenticated: boolean = user && user.expiresOn > new Date()
+  const { instance } = useMsal();
 
   const initLogin = () => {
     const request = {
-      scopes: ['openid', 'profile'],
-    }
-    instance.loginPopup(request)
-  }
+      scopes: ["openid", "profile"]
+    };
+    instance.loginPopup(request);
+  };
 
   const initLogout = () => {
-    instance.logoutPopup()
-  }
+    instance.logoutPopup();
+  };
 
   useEffect(() => {
     const callbackId = instance.addEventCallback((message: EventMessage) => {
       if (message.eventType === EventType.LOGIN_SUCCESS) {
-        const { accessToken, expiresOn, account } =
-          message.payload as AuthenticationResult
+        const { accessToken, expiresOn, account } = message.payload as AuthenticationResult;
 
         const user: AuthUser = {
-          homeAccountId: account?.homeAccountId ?? '',
-          localAccountId: account?.localAccountId ?? '',
-          name: account?.name ?? '',
-          username: account?.username ?? '',
-          expiresOn: expiresOn ?? new Date(),
-          accessToken,
-        }
-        setUser(user)
+          homeAccountId: account?.homeAccountId ?? null,
+          localAccountId: account?.localAccountId ?? null,
+          name: account?.name ?? null,
+          username: account?.username ?? null,
+          expiresOn: expiresOn,
+          accessToken
+        };
+        setUser(user);
       }
 
-      if (message.eventType === EventType.LOGOUT_SUCCESS) removeUser()
-    })
+      if (message.eventType === EventType.LOGOUT_SUCCESS) removeUser();
+    });
 
     return () => {
       if (callbackId) {
-        instance.removeEventCallback(callbackId)
+        instance.removeEventCallback(callbackId);
       }
-    }
-  })
+    };
+  });
 
   return {
     initLogin,
     initLogout,
     isAuthenticated,
-    user,
-  }
-}
+    isAdmin,
+    user
+  };
+};
