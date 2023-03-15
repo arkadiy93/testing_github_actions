@@ -1,4 +1,4 @@
-import {PublicClientApplication} from "@azure/msal-browser";
+import { PublicClientApplication } from '@azure/msal-browser'
 
 export const msalInstance = new PublicClientApplication({
   auth: {
@@ -20,4 +20,3 @@ export const msalInstance = new PublicClientApplication({
     asyncPopups: false,
   },
 })
-

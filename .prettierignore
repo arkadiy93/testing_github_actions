@@ -1,5 +1,5 @@
-build
-coverage
+/*
+!/src/
 
 *.html
 
@@ -18,8 +18,5 @@ coverage
 .DS_Store
 
 *.json
+*.d.ts
 *.yaml
-
-.husky
-dist
-.github

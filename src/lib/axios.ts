@@ -15,4 +15,5 @@ export const axios = Axios.create({
   baseURL: API_URL,
 })
 
+console.log(API_URL)
 axios.interceptors.request.use(authRequestInterceptor)
