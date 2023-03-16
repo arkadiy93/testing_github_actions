@@ -1,10 +1,9 @@
 name: Publish Docker image
 
 env:
-#  TENANT_ID: "3aa4a235-b6e2-48d5-9195-7fcf05b459b0"
+  #TENANT_ID: "3aa4a235-b6e2-48d5-9195-7fcf05b459b0"
   SP_CLIENT_ID: ${{ secrets.SP_CLIENT_ID }}
   SP_CLIENT_SECRET:  ${{ secrets.SP_CLIENT_SECRET }}
-#  ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
   ARC_LOGIN_NAME: "mytestregistryuis"
   CONTAINER_REGISTRY_NAME: "mytestregistryuis.azurecr.io"
 
@@ -16,6 +15,8 @@ on:
       - completed
 
 jobs:
+job1:
+  if: ${{ github.event.workflow_run.conclusion == 'success' }}
   build-container-image:
     name: Build container image
     runs-on: ubuntu-latest

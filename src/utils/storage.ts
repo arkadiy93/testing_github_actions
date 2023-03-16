@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_PREFIX } from '@/config'
-import { AuthUser } from '@/hooks/useAuth'
+import { AuthUser } from "@/providers/Auth";
 
 export const getAccessToken = (): string | null => {
   const key = `${LOCAL_STORAGE_PREFIX}-user`

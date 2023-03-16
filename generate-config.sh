@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Generate config.js with environment variables
 cat <<EOT > ./env.js
 window._env_ = {
   REACT_APP_API_URL: '$REACT_APP_API_URL',
+  REACT_APP_MSAL_CLIENT_ID: '$REACT_APP_MSAL_CLIENT_ID',
+  REACT_APP_MSAL_AUTHORITY_URL: '$REACT_APP_MSAL_AUTHORITY_URL',
+  REACT_APP_MSAL_REDIRECT_URL: '$REACT_APP_MSAL_REDIRECT_URL',
 };
 EOT

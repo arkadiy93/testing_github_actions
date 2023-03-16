@@ -1,7 +1,8 @@
-import { useAuth } from './hooks/useAuth'
+import { useContext } from "react";
+import { AuthContext } from "@/providers/Auth";
 
 export const SignInButton = () => {
-  const { initLogin } = useAuth()
+  const { initLogin } = useContext(AuthContext)
 
   return (
     <button className="ml-auto" onClick={initLogin}>
@@ -11,7 +12,7 @@ export const SignInButton = () => {
 }
 
 export const SignOutButton = () => {
-  const { initLogout } = useAuth()
+  const { initLogout } = useContext(AuthContext)
 
   return (
     <button className="ml-auto" onClick={initLogout}>

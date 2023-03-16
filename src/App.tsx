@@ -1,8 +1,9 @@
 import { SignInButton, SignOutButton } from './Button'
-import { useAuth } from './hooks/useAuth'
+import { useContext } from 'react'
+import { AuthContext } from '@/providers/Auth'
 
 function App() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useContext(AuthContext)
 
   return (
     <>

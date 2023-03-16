@@ -1,12 +1,12 @@
 import { PublicClientApplication } from '@azure/msal-browser'
+import { MSAL_AUTHORITY_URL, MSAL_CLIENT_ID, MSAL_REDIRECT_URL } from "@/config";
 
 export const msalInstance = new PublicClientApplication({
   auth: {
-    authority:
-      'https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0',
-    clientId: '6524f1c8-d5c2-4368-a4bd-24b4fb084f59',
-    redirectUri: 'http://localhost:5170',
-    postLogoutRedirectUri: 'http://localhost:5170',
+    authority: MSAL_AUTHORITY_URL,
+    clientId: MSAL_CLIENT_ID,
+    redirectUri: MSAL_REDIRECT_URL,
+    postLogoutRedirectUri: MSAL_REDIRECT_URL,
   },
   cache: {
     cacheLocation: 'sessionStorage',
