@@ -17,29 +17,27 @@ on:
 jobs:
   job1:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    build-container-image:
-      name: Build container image
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Authenticate
-          run: |
-            az login --username $SP_CLIENT_ID --password $SP_CLIENT_SECRET
-            az acr login --name $ARC_LOGIN_NAME
+    steps:
+      - name: Authenticate
+        run: |
+          az login --username $SP_CLIENT_ID --password $SP_CLIENT_SECRET
+          az acr login --name $ARC_LOGIN_NAME
 
-        - name: Checkout repository
-          uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
 
-        - name: Build container image
-          run: |
-            CONTAINER_NAME="accessitportalfrontend:${GITHUB_SHA::8}"
-            echo "Building container image: $CONTAINER_NAME"
-            docker build --pull --rm --tag $CONTAINER_NAME "."
-            docker tag $CONTAINER_NAME $CONTAINER_REGISTRY_NAME/$CONTAINER_NAME
+      - name: Build container image
+        run: |
+          CONTAINER_NAME="accessitportalfrontend:${GITHUB_SHA::8}"
+          echo "Building container image: $CONTAINER_NAME"
+          docker build --pull --rm --tag $CONTAINER_NAME "."
+          docker tag $CONTAINER_NAME $CONTAINER_REGISTRY_NAME/$CONTAINER_NAME
 
-        - name: Push container image to ACR
-          run: |
-            CONTAINER_NAME="accessitportalfrontend:${GITHUB_SHA::8}"
-            echo "Push container image: $CONTAINER_NAME"
-            docker push $CONTAINER_REGISTRY_NAME/$CONTAINER_NAME & wait
+      - name: Push container image to ACR
+        run: |
+          CONTAINER_NAME="accessitportalfrontend:${GITHUB_SHA::8}"
+          echo "Push container image: $CONTAINER_NAME"
+          docker push $CONTAINER_REGISTRY_NAME/$CONTAINER_NAME & wait
