@@ -5,9 +5,9 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { LOCAL_STORAGE_PREFIX } from '@/config'
+import config from '@/config'
 
-const getFullKeyName = (key: string) => `${LOCAL_STORAGE_PREFIX}-${key}`
+const getFullKeyName = (key: string) => `${config.LOCAL_STORAGE_PREFIX}-${key}`
 
 const datePattern =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z|[+-]\d{2}:\d{2})$/

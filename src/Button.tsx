@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { AuthContext } from "@/providers/Auth";
+import { useContext } from 'react'
+import { AuthContext } from '@/providers/Auth'
 
 export const SignInButton = () => {
   const { initLogin } = useContext(AuthContext)

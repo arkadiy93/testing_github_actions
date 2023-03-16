@@ -1,12 +1,11 @@
 import { createContext, PropsWithChildren, useEffect } from 'react'
 import useLocalStorage from '@/hooks/useLocalStorage'
-import { useMsal } from "@azure/msal-react";
+import { useMsal } from '@azure/msal-react'
 import {
   AuthenticationResult,
   EventMessage,
   EventType,
 } from '@azure/msal-browser'
-
 
 export type AuthUser = {
   accessToken: string
@@ -89,8 +88,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }
 
   return (
-      <AuthContext.Provider value={providerProps}>
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider value={providerProps}>
+      {children}
+    </AuthContext.Provider>
   )
 }

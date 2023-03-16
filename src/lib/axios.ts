@@ -1,6 +1,6 @@
 import Axios, { InternalAxiosRequestConfig } from 'axios'
 import { getAccessToken } from '@/utils/storage'
-import { API_URL } from '@/config'
+import config from '@/config'
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   config.headers.Accept = 'application/json'
@@ -12,8 +12,7 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 export const axios = Axios.create({
-  baseURL: API_URL,
+  baseURL: config.API_URL,
 })
 
-console.log(API_URL)
 axios.interceptors.request.use(authRequestInterceptor)
